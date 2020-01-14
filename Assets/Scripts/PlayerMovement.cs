@@ -5,10 +5,10 @@ using UnityEngine;
 [RequireComponent(typeof(CharacterController))]
 public class PlayerMovement : MonoBehaviour
 {
-	private bool isGrounded = false, jump = false;
+	private bool isGrounded = false, run = false, jump = false;
 	private readonly float standardGravity = -9.81f;
 	[SerializeField]
-	private float gravityMultiplier = 3, speed = 5, jumpHeight = 2;
+	private float gravityMultiplier = 3, walkSpeed = 5, runSpeed = 10, jumpHeight = 2;
 	private float gravity = -9.81f, x = 0, z = 0;
 	private Vector3 velocity = Vector3.zero;
 	[SerializeField]
@@ -18,6 +18,7 @@ public class PlayerMovement : MonoBehaviour
 	private CharacterController characterController;
 
 
+	public bool Run { get => run; set => run = value; }
 	public bool Jump { get => jump; set => jump = value; }
 	public float X { get => x; set => x = value; }
 	public float Z { get => z; set => z = value; }
@@ -66,6 +67,7 @@ public class PlayerMovement : MonoBehaviour
 
 	private void Move()
 	{
+		float speed = run ? runSpeed : walkSpeed;
 		Vector3 move = (transform.right*x + transform.forward*z) * speed;
 		characterController.Move(move * Time.deltaTime);
 	}

@@ -50,6 +50,7 @@ public class PlayerInput : MonoBehaviour
 
 	private void GetKeyboardInputs()
 	{
+		playerMovement.Run = Input.GetKey(KeyCode.LeftShift);
 		playerMovement.Jump = Input.GetButtonDown("Jump");
 		playerMovement.X = Input.GetAxis("Horizontal");
 		playerMovement.Z = Input.GetAxis("Vertical");
