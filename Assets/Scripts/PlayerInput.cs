@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(PlayerAim))]
 [RequireComponent(typeof(PlayerMovement))]
 public class PlayerInput : MonoBehaviour
 {
 	[SerializeField]
 	private Platform usedPlatform;
+	private PlayerAim playerAim;
 	private PlayerMovement playerMovement;
 
 
@@ -15,6 +17,7 @@ public class PlayerInput : MonoBehaviour
 
 	private void Awake()
 	{
+		playerAim = GetComponent<PlayerAim>();
 		playerMovement = GetComponent<PlayerMovement>();
 	}
 
@@ -40,7 +43,9 @@ public class PlayerInput : MonoBehaviour
 	#region PC inputs:
 	private void GetMouseInputs()
 	{
-
+		playerAim.Zoom = Input.GetMouseButton(1);
+		playerAim.MouseX = Input.GetAxis("Mouse X");
+		playerAim.MouseY = Input.GetAxis("Mouse Y");
 	}
 
 	private void GetKeyboardInputs()
