@@ -49,7 +49,7 @@ public class PlayerMovement : MonoBehaviour
 
 	private void CheckGround()
 	{
-		isGrounded = Physics.CheckSphere(groundChecker.position, 0.5f, groundMask);
+		isGrounded = Physics.CheckSphere(groundChecker.position, 0.7f, groundMask);
 	}
 
 	private void UseGravity()
@@ -60,6 +60,7 @@ public class PlayerMovement : MonoBehaviour
 		if(isGrounded && velocity.y < -2)
 		{
 			velocity.y = -2;
+			characterController.slopeLimit = 45;
 		}
 
 		characterController.Move(velocity * Time.deltaTime);
@@ -68,7 +69,7 @@ public class PlayerMovement : MonoBehaviour
 	private void Move()
 	{
 		float speed = run ? runSpeed : walkSpeed;
-		Vector3 move = (transform.right*x + transform.forward*z) * speed;
+		Vector3 move = Vector3.Normalize(transform.right*x + transform.forward*z) * speed;
 		characterController.Move(move * Time.deltaTime);
 	}
 
@@ -77,6 +78,8 @@ public class PlayerMovement : MonoBehaviour
 		if(isGrounded && jump)
 		{
 			jump = false;
+			characterController.slopeLimit = 100;
+
 			float y = Mathf.Sqrt(jumpHeight * -2 * gravity);
 
 			velocity.y = y;
